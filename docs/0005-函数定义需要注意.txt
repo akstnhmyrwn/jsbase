@@ -1,0 +1,27 @@
+函数名的提升
+JavaScript 引擎将函数名视同变量名，所以采用function命令声明函数时，整个函数会像变量声明一样，被提升到代码头部。所以，下面的代码不会报错。
+
+f();
+
+function f() {}
+表面上，上面代码好像在声明之前就调用了函数f。但是实际上，由于“变量提升”，函数f被提升到了代码头部，也就是在调用之前已经声明了。但是，如果采用赋值语句定义函数，JavaScript 就会报错。
+
+f();
+var f = function (){};
+// TypeError: undefined is not a function
+上面的代码等同于下面的形式。
+
+var f;
+f();
+f = function () {};
+上面代码第二行，调用f的时候，f只是被声明了，还没有被赋值，等于undefined，所以会报错。因此，如果同时采用function命令和赋值语句声明同一个函数，最后总是采用赋值语句的定义。
+
+var f = function () {
+  console.log('1');
+}
+
+function f() {
+  console.log('2');
+}
+
+f() // 1
